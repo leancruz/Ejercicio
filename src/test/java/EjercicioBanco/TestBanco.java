@@ -53,7 +53,7 @@ public class TestBanco extends TestCase{
 				e.printStackTrace();
 			}
 			
-			assertTrue(cc.getSaldo() == 0);
+			assertTrue(cc.getSaldo() == -100);
 		
 		}
 		
