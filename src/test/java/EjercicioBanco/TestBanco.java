@@ -38,7 +38,7 @@ public class TestBanco extends TestCase{
 	
 	
 	
-	//Deposito Corriente
+	//Deposito Core
 	
 	
 	
