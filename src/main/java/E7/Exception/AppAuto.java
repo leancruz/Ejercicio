@@ -20,52 +20,52 @@ import java.util.Scanner;
  *
  */
 
-public class AppAuto {
+//public class AppAuto {
 
-	public static void main(String[] args) throws Exception {
-	
-		Auto au = new Auto();
-		System.out.println("Velocidad: " + au.getVelocidad());
-		Scanner sc = new Scanner (System.in);
-		
-		System.out.println("CONTROL DEL AUTO");
-		System.out.println("----------------");
-		System.out.println("Ingrese que desea hacer");
-		System.out.println("1 - Acelerar");
-		System.out.println("2 - Frenar");
-		System.out.println("0 - Apagar");
-		int opcion = sc.nextInt();
-		while (opcion != 0) {
-			switch (opcion) {
-			case 1:
-				try {
-					au.acelerar();
-				} catch (ExcesoVelocidadException e) {
-					System.out.println("No puede acelerar mas");
-				}
-				Log(au.getVelocidad());
-				break;		
-				
-			case 2:
-				au.frenar();
-			} catch (AutoDetenidoException e) {
-				System.out.println("Ya esta detenido");
-			}
-			log(au.getVelocidad());
-				break;
-				
-	//		default:
-				break;
-
-			}
-
-			System.out.println("Opciones: 1 - Acelerar /// 2 - Frenar /// 0 - Salir");
-			opcion = sc.nextInt();
-	}
-
-	private static void Log(int velocidad) {
-		// TODO Auto-generated method stub
-
-	}
-
-}
+//	public static void main(String[] args) throws Exception {
+//	
+//		Auto au = new Auto();
+//		System.out.println("Velocidad: " + au.getVelocidad());
+//		Scanner sc = new Scanner (System.in);
+//		
+//		System.out.println("CONTROL DEL AUTO");
+//		System.out.println("----------------");
+//		System.out.println("Ingrese que desea hacer");
+//		System.out.println("1 - Acelerar");
+//		System.out.println("2 - Frenar");
+//		System.out.println("0 - Apagar");
+//		int opcion = sc.nextInt();
+//		while (opcion != 0) {
+//			switch (opcion) {
+//			case 1:
+//				try {
+//					au.acelerar();
+//				} catch (ExcesoVelocidadException e) {
+//					System.out.println("No puede acelerar mas");
+//				}
+//				Log(au.getVelocidad());
+//				break;		
+//				
+//			case 2:
+//				au.frenar();
+//			} catch (AutoDetenidoException e) {
+//				System.out.println("Ya esta detenido");
+//			}
+//			log(au.getVelocidad());
+//				break;
+//				
+//	//		default:
+//				break;
+//
+//			}
+//
+//			System.out.println("Opciones: 1 - Acelerar /// 2 - Frenar /// 0 - Salir");
+//			opcion = sc.nextInt();
+//	}
+//
+//	private static void Log(int velocidad) {
+//		// TODO Auto-generated method stub
+//
+//	}
+//
+//}

@@ -40,7 +40,11 @@ public class TestBanco extends TestCase{
 	
 	//Deposito Core
 	
-	
+	public void testCorrienteCC() {
+		CuentaCorriente cc = new CuentaCorriente("001", 100, 0);
+		cc.depositar(2);
+		assertTrue(cc.getSaldo() == 102);
+	}
 	
 	//Descubierto Corriente
 	
