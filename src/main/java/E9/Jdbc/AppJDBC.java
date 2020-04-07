@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
+import E9.Jdbc.Dao.EmploDao;
+
 public class AppJDBC {
 
 	public static void main(String[] args) {
@@ -22,7 +24,7 @@ public class AppJDBC {
 			Scanner sc = new Scanner(System.in);
 			int opcion = sc.nextInt();
 
- 			while (opcion != 0) {
+			while (opcion != 0) {
 
 				switch (opcion) {
 				case 1:
@@ -55,12 +57,12 @@ public class AppJDBC {
 		}
 	}
 
-	
-	
-	
-	// --------------------------------------------------------------------------------------------
-	// ---------------------------------------ALTA DE DATOS----------------------------------------
-	// --------------------------------------------------------------------------------------------
+	/*
+	 * ----------------------------------------------------------------------
+	 * -------------------------------ALTA-----------------------------------
+	 * ----------------------------------------------------------------------
+	 */
+
 	private static void insertar(Connection conection, Scanner sc) throws SQLException {
 		Statement stmt = conection.createStatement();
 		System.out.println("Ingrese email:");
@@ -72,30 +74,30 @@ public class AppJDBC {
 		System.out.println("Ingrese Apellido:");
 		String lastName = sc.next();
 
-		String insertSql = "insert into emplo (email, `FIRST_NAME` , `LAST_NAME` ) values ('" + email + "', '" + firstName + "', '" + lastName + "');\r\n";
-		stmt.executeUpdate(insertSql);
-		System.out.println("Registro Ingresado");
-		System.out.println("------------------");
+		Emplo emp = new Emplo();
+		emp.setEmail(email);
+		emp.setFirstName(firstName);
+		emp.setLastName(lastName);
+		EmploDao.insertar(emp, stmt);
 	}
 
-	
-	
-	
-	
-	// --------------------------------------------------------------------------------------------
-	// ---------------------------------MODIFICACION DE DATOS--------------------------------------
-	// --------------------------------------------------------------------------------------------
+	/*
+	 * ----------------------------------------------------------------------
+	 * --------------------------MODIFICACION-------------------------------
+	 * ----------------------------------------------------------------------
+	 */
+
 	private static void modif(Connection conection, Scanner sc) throws SQLException {
 		Statement stmt = conection.createStatement();
 		System.out.println("Ingrese ID a Modificar:");
 		int id = sc.nextInt();
-		
-		Emplo buscado = buscar (conection, id);
-				
+
+		Emplo buscado = buscar(conection, id);
+
 		if (buscado == null) {
-			
+
 			System.out.println("No se encontro el ID ");
-			
+
 		} else {
 			System.out.println("Ingrese email:");
 			String email = sc.next();
@@ -104,46 +106,34 @@ public class AppJDBC {
 			System.out.println("Ingrese Apellido:");
 			String lastName = sc.next();
 
-			String insertSql = "update emplo set email = '" + email + "', FIRST_NAME = '" + firstName + "', LAST_NAME = '" + lastName + "' where id = " + id;
-			stmt.executeUpdate(insertSql);
-			
-			System.out.println("Registro Modificado");
-			System.out.println("------------------");
+			Emplo emp = new Emplo();
+			emp.setId(id);
+			emp.setEmail(email);
+			emp.setFirstName(firstName);
+			emp.setLastName(lastName);
+			EmploDao.modif(emp, stmt);
 		}
 	}
-		
-	
-	
-	
-	
 
-	
-	// --------------------------------------------------------------------------------------------
-	// ---------------------------------------BAJA DE DATOS----------------------------------------
-	// --------------------------------------------------------------------------------------------
+	/*
+	 * ----------------------------------------------------------------------
+	 * -------------------------------BAJA-----------------------------------
+	 * ----------------------------------------------------------------------
+	 */
 	private static void baja(Connection conection, Scanner sc) throws SQLException {
 		Statement stmt = conection.createStatement();
 		System.out.println("Ingrese ID para dar de baja:");
 		int id = sc.nextInt();
-		
-		String insertSql = "delete from emplo where ID = " + id;
-		stmt.executeUpdate(insertSql);
-		
-		System.out.println("Registro Eliminado");
-		System.out.println("------------------");
-		
-		
-		
-	}
-	
-	
+		Emplo emp = buscar(conection, id);
+		EmploDao.baja(emp, stmt);
 
-	
-	
-	
-	// --------------------------------------------------------------------------------------------
-	// --------------------------------------LISTA DE DATOS----------------------------------------
-	// --------------------------------------------------------------------------------------------
+	}
+
+	/*
+	 * ----------------------------------------------------------------------
+	 * ------------------------------LISTAR----------------------------------
+	 * ----------------------------------------------------------------------
+	 */
 	private static void listar(Connection conection) throws SQLException {
 
 		Statement stmt = conection.createStatement();
@@ -156,31 +146,18 @@ public class AppJDBC {
 			System.out.println(id + "|||" + mail + "|||" + name + "|||" + last);
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	// --------------------------------------------------------------------------------------------
-	// -------------------------------------BUSQUEDA DE DATOS--------------------------------------
-	// --------------------------------------------------------------------------------------------
-		private static Emplo buscar(Connection con, int id) throws SQLException {
 
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from emplo where id = " + id);
-			Emplo emp = null;
-	
-			while (rs.next()) {
-			emp = new Emplo ();
-			emp.setId(rs.getInt(1));
-			emp.setEmail(rs.getString(2));
-			emp.setFirstName(rs.getString(3));
-			emp.setLastName(rs.getString(4));
-		    	}
-			return emp;
-		}
-	
+	/*
+	 * ----------------------------------------------------------------------
+	 * ------------------------------BUSQUEDA---------------------------------
+	 * ----------------------------------------------------------------------
+	 */
+
+	private static Emplo buscar(Connection con, int id) throws SQLException {
+
+		Statement stmt = con.createStatement();
+		Emplo emp = EmploDao.buscar(stmt, id);
+		return emp;
+
+	}
 }
